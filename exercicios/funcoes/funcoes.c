@@ -7,13 +7,22 @@ struct DadosArray {
     float media;
 };
 
+void printArray(int tamanho, int array[tamanho]) {
+    for (int i = 0; i < tamanho; i++) printf("%d  ", array[i]);
+}
+
 void printMatriz(int linhas, int colunas, int matriz[linhas][colunas]) {
     for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            printf("%d  ", matriz[i][j]);
-        }
+        printArray(colunas, matriz[i]);
         printf("\n");
     }
+}
+
+int len(char texto2[]) {
+    int tamanho;
+    for (int i = 0; texto2[i] != 0; i++) tamanho = i;
+    tamanho++;
+    return tamanho;
 }
 
 int soma(int num1, int num2) {
@@ -28,9 +37,7 @@ void trocar(int *num1, int *num2) {
 
 float somaArr(int tamanho, int numeros[tamanho]) {
     float soma = 0;
-    for (int i = 0; i < tamanho; i++) {
-        soma += numeros[i];
-    }
+    for (int i = 0; i < tamanho; i++) soma += numeros[i];
     return soma;
 }
 
@@ -41,9 +48,7 @@ float media(int tamanho, int numeros[tamanho]) {
 int maximo(int tamanho, int numeros[tamanho]) {
     int max = numeros[0];
     for (int i = 1; i < tamanho; i++) {
-        if (numeros[i] > max) {
-            max = numeros[i];
-        }
+        if (numeros[i] > max) max = numeros[i];
     }
     return max;
 }
@@ -61,20 +66,14 @@ void inverter(char texto[]) {
 int somaMatriz(int linhas, int colunas, int matriz[linhas][colunas]) {
     int soma = 0;
     for (int i = 0; i < linhas; i++) {
-        for (int j = 0; j < colunas; j++) {
-            soma += matriz[i][j];
-        }        
+        for (int j = 0; j < colunas; j++) soma += matriz[i][j];
     }
     return soma;
 }
 
 void copiaString(char texto1[], char texto2[]) {
-    int tamanho;
-    for (int i = 0; texto1[i] != 0; i++) tamanho = i;
-    tamanho++;
-    for (int i = 0; i < tamanho; i++) {
-        texto2[i] = texto1[i];
-    }
+    int tamanho = len(texto1);
+    for (int i = 0; i < tamanho; i++) texto2[i] = texto1[i];
 }
 
 void ordenaArray(int tamanho, int numeros[tamanho]) {
@@ -95,17 +94,13 @@ void ordenaArray(int tamanho, int numeros[tamanho]) {
 
 int fatorial(int num) {
     int fatorial = num;
-    for (int i = 1; i < num; i++) {
-        fatorial *= i;
-    }
+    for (int i = 1; i < num; i++) fatorial *= i;
     return fatorial;
 }
 
 int calculaPotencia(int base, int expoente) {
     int potencia = base;
-    for (int i = 1; i < expoente; i ++) {
-        potencia *= base;
-    }
+    for (int i = 1; i < expoente; i ++) potencia *= base;
     return potencia;
 }
 
@@ -123,9 +118,7 @@ int calculaMDC(int num1, int num2) {
         resto = num1 % num2;
         num1 = num2;
         num2 = resto;
-        if (resto == 0) {
-            break;
-        }
+        if (resto == 0) break;
     };
     return num1;
 }
@@ -145,9 +138,7 @@ int calculaFibonacci(int posicao) {
 int contaCaracteres(char texto[], char letra) {
     int quantidade = 0;
     for (int i = 0; texto[i] != 0; i++) {
-        if (texto[i] == letra) {
-            quantidade++;
-        }
+        if (texto[i] == letra) quantidade++;
     }
     return quantidade;
 }
@@ -170,9 +161,7 @@ float calculaMediaPonderada(int tamanho, float notas[tamanho], float pesos[taman
 int minimo(int tamanho, int numeros[tamanho]) {
     int min = numeros[0];
     for (int i = 1; i < tamanho; i++) {
-        if (numeros[i] < min) {
-            min = numeros[i];
-        }
+        if (numeros[i] < min) min = numeros[i];
     }
     return min;
 }
@@ -202,11 +191,80 @@ void inverteMatriz(int linhas, int colunas, int matriz[linhas][colunas]) {
     }
 }
 
+int contaPalavras(char *texto) {
+    int tamanho = len(texto);
+    if (tamanho == 0) return 0;
+    int quant = 0;
+    if (texto[0] != ' ') quant = 1;
+    for (int i = 1; i < tamanho; i++) {
+        if (texto[i] != ' ' && texto[i-1] == ' ') quant++;
+    }
+    return quant;
+}
+
+int calculaMaiorProduto(int tamanho, int numeros[tamanho]) {
+    if (tamanho == 1) return numeros[0];
+    if (tamanho == 2) return numeros[0] * numeros[1];
+    int maior, maior2;
+    if (numeros[0] > numeros[1]) {
+        maior = numeros[0];
+        maior2 = numeros[1];
+    } else {
+        maior = numeros[1];
+        maior2 = numeros[0];
+    }
+    for(int i = 2; i < tamanho; i++) {
+        if (numeros[i] > maior) {
+            maior2 = maior;
+            maior = numeros[i];
+        } else if (numeros[i] > maior2) {
+            maior2 = numeros[i];
+        }
+    }
+    return maior * maior2;
+}
+
+int verificaPalindromo(char *texto) {
+    int i, j;
+    for (i = 0, j = len(texto) - 1; i < j; i++, j--) {
+        if (texto[i] != texto[j]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+void copiaMatriz(int linhas, int colunas, int original[linhas][colunas], int copia[linhas][colunas]) {
+    int i, j;
+    for (i = 0; i < linhas; i++) {
+        for (j = 0; j < colunas; j++) {
+            copia[i][j] = original[i][j];
+        }
+    }
+}
+
+int contaCaracteresUnicos(char *texto) {
+    int i, j;
+    int soma = 0;
+    int unico = 1;
+    for (i = 0; i < len(texto); i++) {
+        unico = 1;
+        for (j = 0; j < len(texto); j++) {
+            if (texto[i] == texto[j] && i != j) {
+                unico = 0;
+                break;
+            }
+        }
+        if (unico) soma++;
+    }
+    return soma;
+}
+
 int main() {
     int num1 = 10; 
     int num2 = 20;
-    int numeros[] = {10, 5, 1};
-    char texto1[] = "ola mundo";
+    int numeros[] = {9, 4, 7};
+    char texto1[] = "abcdedcba";
     char texto2[] = "123456789";
     int matriz1[3][3] = {
         {1, 2, 4},
@@ -221,6 +279,7 @@ int main() {
     };
     float notas[] = {8.9, 9.2, 5.3, 0.2};
     float pesos[] = {10, 2, 1, 5.5};
+    char texto3[] = "a b j b a h";
 
     // Exercício 1: Crie uma função chamada soma que recebe dois inteiros como parâmetros e retorna a soma deles.
     printf("1)\n");
@@ -267,14 +326,10 @@ int main() {
 
     // Exercício 8: Crie uma função chamada ordenaArray que recebe um array de inteiros como parâmetro e o ordena em ordem crescente.
     printf("8)\n");
-    for (int i = 0; i < 3; i++) {
-        printf("%d ", numeros[i]);
-    }
+    printArray(3, numeros);
     printf("\n");
     ordenaArray(3, numeros);
-    for (int i = 0; i < 3; i++) {
-        printf("%d ", numeros[i]);
-    }
+    printArray(3, numeros);
     printf("\n\n");
 
     // Exercício 9: Crie uma função chamada fatorial que recebe um número inteiro como parâmetro e retorna o fatorial desse número.
@@ -289,14 +344,10 @@ int main() {
 
     // Exercício 13: Crie uma função chamada inverteArray que recebe um array de inteiros como parâmetro e inverte a ordem dos elementos no array.
     printf("13)\n");
-    for (int i = 0; i < 3; i++) {
-        printf("%d ", numeros[i]);
-    }
+    printArray(3, numeros);
     printf("\n");
     inverteArray(3, numeros);
-    for (int i = 0; i < 3; i++) {
-        printf("%d ", numeros[i]);
-    }
+    printArray(3, numeros);
     printf("\n\n");
 
     // Exercício 14: Crie uma função chamada calculaMDC que recebe dois números inteiros como parâmetros e retorna o máximo divisor comum (MDC) entre eles.
@@ -311,7 +362,7 @@ int main() {
 
     // Exercício 16: Crie uma função chamada contaCaracteres que recebe uma string e um caractere como parâmetros e retorna o número de vezes que o caractere aparece na string.
     printf("16)\n");
-    printf("o caractere 'o' aparece %d no texto \"%s\"", contaCaracteres(texto1, 'o'), texto1);
+    printf("o caractere 'o' aparece %d vezes no texto \"%s\"", contaCaracteres(texto1, 'o'), texto1);
     printf("\n\n");
     
     // Exercício 17: Crie uma função chamada calculaMediaMatriz que recebe uma matriz de inteiros e suas dimensões como parâmetros e retorna a média de todos os elementos da matriz.
@@ -348,9 +399,42 @@ int main() {
     // Exercício 22: Crie uma função chamada inverteMatriz que recebe uma matriz de inteiros e suas dimensões como parâmetros e inverte a ordem das linhas da matriz.
     printf("22)\n");
     printMatriz(4, 4, matriz2);
-    printf("\n");
+    printf("invertendo...\n");
     inverteMatriz(4, 4, matriz2);
     printMatriz(4, 4, matriz2);
+    printf("\n");
+
+    // Exercício 23: Crie uma função chamada contaPalavras que recebe uma string como parâmetro e retorna o número de palavras na string. Considere que as palavras são separadas por espaços em branco.
+    printf("23)\n");
+    printf("a string \"%s\" tem %d palavras", texto3, contaPalavras(texto3));
+    printf("\n\n");
+
+    // Exercício 24: Crie uma função chamada calculaMaiorProduto que recebe um array de inteiros como parâmetro e seu tamanho e retorna o maior produto entre quaisquer dois elementos do array.
+    printf("24)\n");
+    printArray(3, numeros);
+    printf("\nO maior produto do array é %d", calculaMaiorProduto(3, numeros));
+    printf("\n\n");
+
+    // Exercício 25: Crie uma função chamada verificaPalindromo que recebe uma string como parâmetro e retorna 1 se a string for um palíndromo (ou seja, lê-se da mesma forma da esquerda para a direita e da direita para a esquerda) e 0 caso contrário.
+    printf("25)\n");
+    printf("a string %s ", texto1);
+    if (verificaPalindromo(texto1) == 1) printf("é um palindromo");
+    else printf("não é um palindromo");
+    printf("\n\n");
+
+    // Exercício 26: Crie uma função chamada copiaMatriz que recebe uma matriz de inteiros e suas dimensões como parâmetros e retorna uma cópia da matriz.
+    printf("26)\n");
+    printMatriz(3, 3, matriz1);
+    printf("copiando...\n");
+    int matriz3[3][3];
+    copiaMatriz(3, 3, matriz1, matriz3);
+    printMatriz(3, 3, matriz3);
+    printf("\n\n");
+
+    // Exercício 27: Crie uma função chamada contaCaracteresUnicos que recebe uma string como parâmetro e retorna o número de caracteres únicos na string.
+    printf("27)\n");
+    printf("a string \"%s\" possui %d caracteres unicos", texto3, contaCaracteresUnicos(texto3));
+    printf("\n\n");
     
     return 0;
 }
