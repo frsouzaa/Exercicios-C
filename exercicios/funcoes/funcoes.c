@@ -429,7 +429,7 @@ int main() {
     int matriz3[3][3];
     copiaMatriz(3, 3, matriz1, matriz3);
     printMatriz(3, 3, matriz3);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 27: Crie uma função chamada contaCaracteresUnicos que recebe uma string como parâmetro e retorna o número de caracteres únicos na string.
     printf("27)\n");
