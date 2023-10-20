@@ -238,6 +238,59 @@ int calculaSomaPilha(struct Pilha* pilha) {
     return soma;
 }
 
+void removeElementosPares(struct Pilha* pilha) {
+    struct Pilha* pilhaTemp = criarPilha();
+    while (pilha->top != NULL) {
+        int temp = desempilha(pilha);
+        if (temp % 2 != 0) {
+            empilha(pilhaTemp, temp);
+        }
+    }
+    while (pilhaTemp->top != NULL) {
+        empilha(pilha, desempilha(pilhaTemp));
+    }
+}
+
+int comparaPilhas(struct Pilha* pilha1, struct Pilha* pilha2) {
+    struct No *no1 = pilha1->top;
+    struct No *no2 = pilha2->top;
+    
+    while (1) {
+        if (no1->next == NULL && no2->next == NULL) {
+            return 1;
+        }
+        
+        if (no1->next == NULL || no2->next == NULL) {
+            return 0;
+        }
+        
+        if (no1->data != no2->data) {
+            return 0;
+        }
+        
+        no1 = no1->next;
+        no2 = no2->next;
+    }
+}
+
+void removeElementoEspecifico(struct Pilha* pilha, int valor) {
+    struct Pilha* pilhaTemp = criarPilha();
+    while (pilha->top != NULL) {
+        int temp = desempilha(pilha);
+        if (temp != valor) {
+            empilha(pilhaTemp, temp);
+        }
+    }
+    while (pilhaTemp->top != NULL) {
+        empilha(pilha, desempilha(pilhaTemp));
+    }
+}
+
+int pilhaEhPalindromo(struct Pilha* pilha1) {
+    struct Pilha* pilhaTemp = copiaPilhaInvertida(pilha1);
+    return comparaPilhas(pilha1, pilhaTemp);
+}
+
 int main() {
     // Exercício 1: Crie uma função chamada criarPilha que inicializa uma pilha vazia e a retorna como um ponteiro.
     printf("1)\n");
@@ -269,7 +322,7 @@ int main() {
     // Exercício 6: Crie uma função chamada limpaPilha que recebe uma pilha como parâmetro e a esvazia, removendo todos os elementos.
     printf("6)\n");
     limpaPilha(pilha1);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 7: Crie uma função chamada copiaPilha que recebe uma pilha como parâmetro e retorna uma cópia da pilha.
     printf("7)\n");
@@ -311,7 +364,7 @@ int main() {
     printf("pilha1 + pilha2: ");
     concatenaPilhas(pilha1, pilha2);
     printPilha(pilha1);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 11: Crie uma função chamada invertePilhaSemUmaPilhaAuxiliar que recebe uma pilha como parâmetro e inverte a ordem dos elementos na pilha original, sem usar uma pilha auxiliar.
     printf("11)\n");
@@ -320,7 +373,7 @@ int main() {
     invertePilhaSemUmaPilhaAuxiliar(pilha1);
     printf("pilha invertida: ");
     printPilha(pilha1);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 12: Crie uma função chamada calculaMediaPilha que recebe uma pilha de números inteiros como parâmetro e retorna a média dos valores na pilha.
     printf("12)\n");
@@ -336,7 +389,7 @@ int main() {
     printf("pilha ordenada: ");
     ordenaPilha(pilha1);
     printPilha(pilha1);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 14: Crie uma função chamada copiaPilhaInvertida que recebe uma pilha como parâmetro e retorna uma cópia invertida da pilha.
     printf("14)\n");
@@ -345,7 +398,7 @@ int main() {
     struct Pilha* pilha3 = copiaPilhaInvertida(pilha1);
     printf("copia invertida: ");
     printPilha(pilha3);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 15: Crie uma função chamada mesclaPilhas que recebe duas pilhas como parâmetros e mescla os elementos das duas pilhas em uma terceira pilha.
     printf("15)\n");
@@ -356,41 +409,37 @@ int main() {
     struct Pilha* pilha4 = mesclaPilhas(pilha1, pilha2);
     printf("pilha mesclada: ");
     printPilha(pilha4);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 16: Crie uma função chamada removeElementoPilha que recebe uma pilha e um valor como parâmetros e remove todas as ocorrências desse valor na pilha.
     printf("16)\n");
     printf("pilha: ");
     printPilha(pilha4);
-    printf("removendo o valor 6 da pilha...\n");
     printf("pilha: ");
     removeElementoPilha(pilha4, 6);
     printPilha(pilha4);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 17: Crie uma função chamada copiaNPrimeirosElementos que recebe uma pilha e um número n como parâmetros e retorna uma cópia dos primeiros n elementos da pilha.
     printf("17)\n");
     printf("pilha: ");
     printPilha(pilha4);
-    printf("copia dos 3 primeiros elementos: ");
     struct Pilha* pilha5 = copiaNPrimeirosElementos(pilha4, 3);
     printPilha(pilha5);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 18: Crie uma função chamada copiaElementosMaiores que recebe uma pilha e um valor limite como parâmetros e retorna uma cópia dos elementos maiores que o limite na pilha.
     printf("18)\n");
     printf("pilha: ");
     printPilha(pilha4);
-    printf("copia dos elementos maiores que 3: ");
     struct Pilha* pilha6 = copiaElementosMaiores(pilha4, 3);
     printPilha(pilha6);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 19: Crie uma função chamada copiaElementosMenores que recebe uma pilha e um valor limite como parâmetros e retorna uma cópia dos elementos menores que o limite na pilha.
     printf("19)\n");
     printf("pilha: ");
     printPilha(pilha4);
-    printf("copia dos elementos menores que 3: ");
     struct Pilha* pilha7 = copiaElementosMenores(pilha4, 3);
     printPilha(pilha7);
     printf("\n\n");
@@ -399,11 +448,10 @@ int main() {
     printf("20)\n");
     printf("pilha: ");
     printPilha(pilha4);
-    printf("inserindo o valor 4 na pilha...\n");
     printf("pilha: ");
     insereOrdenadoPilha(pilha4, 4);
     printPilha(pilha4);
-    printf("\n\n");
+    printf("\n");
 
     // Exercício 21: Crie uma função chamada somaElementosPilha que recebe uma pilha como parâmetro e retorna a soma de todos os elementos na pilha.
     printf("21)\n");
@@ -420,6 +468,82 @@ int main() {
     printf("pilha8: ");
     printPilha(pilha8);
     printf("\n");
+
+    // Exercício 23: Crie uma função chamada removeElementosPares que recebe uma pilha como parâmetro e remove todos os elementos pares da pilha.
+    printf("23)\n");
+    printf("pilha: ");
+    printPilha(pilha4);
+    removeElementosPares(pilha4);
+    printf("pilha: ");
+    printPilha(pilha4);
+    printf("\n");
+
+    // Exercício 24: Crie uma função chamada inverteOrdemElementos que recebe uma pilha como parâmetro e inverte a ordem dos elementos na pilha.
+    printf("24)\n");
+    printf("pilha: ");
+    printPilha(pilha4);
+    invertePilha(pilha4);
+    printf("pilha: ");
+    printPilha(pilha4);
+    printf("\n");
+
+    // Exercício 25: Crie uma função chamada tamanhoPilha que recebe uma pilha como parâmetro e retorna o número de elementos na pilha.
+    printf("25)\n");
+    printf("pilha: ");
+    printPilha(pilha4);
+    printf("tamanho da pilha: %d", tamanhoPilha(pilha4));
+    printf("\n\n");
+
+    // Exercício 26: Crie uma função chamada comparaPilhas que recebe duas pilhas como parâmetros e verifica se elas são iguais (ou seja, têm os mesmos elementos na mesma ordem).
+    printf("26)\n");
+    printf("pilha1: ");
+    printPilha(pilha4);
+    printf("pilha2: ");
+    printPilha(pilha8);
+    printf("pilhas iguais? %s", comparaPilhas(pilha4, pilha8) ? "sim" : "não");
+    printf("\n\n");
+
+    // Exercício 27: Crie uma função chamada intercalaPilhas que recebe duas pilhas como parâmetros e cria uma terceira pilha com os elementos intercalados das duas pilhas originais.
+    printf("27)\n");
+    printf("pilha1: ");
+    printPilha(pilha4);
+    printf("pilha2: ");
+    printPilha(pilha8);
+    struct Pilha* pilha9 = mesclaPilhas(pilha4, pilha8);
+    printf("pilha mesclada: ");
+    printPilha(pilha9);
+    printf("\n");
+
+    // Exercício 28: Crie uma função chamada removeElementoEspecifico que recebe uma pilha e um valor como parâmetros e remove todas as ocorrências desse valor na pilha.
+    printf("28)\n");
+    printf("pilha: ");
+    printPilha(pilha9);
+    removeElementoEspecifico(pilha9, 5);
+    printf("pilha: ");
+    printPilha(pilha9);
+    printf("\n");
+
+    // Exercício 29: Crie uma função chamada copiaInvertidaPilha que recebe uma pilha como parâmetro e retorna uma cópia invertida (em ordem contrária) da pilha original.
+    printf("29)\n");
+    printf("pilha: ");
+    printPilha(pilha9);
+    struct Pilha* pilha10 = copiaPilhaInvertida(pilha9);
+    printf("pilha invertida: ");
+    printPilha(pilha10);
+    printf("\n");
+
+    // Exercício 30: Crie uma função chamada pilhaEhPalindromo que recebe uma pilha como parâmetro e verifica se ela representa um palíndromo. Um palíndromo é uma sequência que é igual quando lida da esquerda para a direita e da direita para a esquerda.
+    printf("30)\n");
+    struct Pilha* pilha11 = criarPilha();
+    empilha(pilha11, 1);
+    empilha(pilha11, 2);
+    empilha(pilha11, 3);
+    empilha(pilha11, 2);
+    empilha(pilha11, 1);
+    printf("pilha: ");
+    printPilha(pilha11);
+    printf("pilha é palíndromo? %s", pilhaEhPalindromo(pilha11) ? "sim" : "não");
+    printf("\n\n");
 
     return 0;
 }
