@@ -33,6 +33,22 @@ void criarListaVazia(List *list) {
     list->tail = NULL;
 }
 
+void printList(List *list)
+{
+    printf("\n");
+    if (list->head == NULL)
+    {
+        return;
+    }
+    Node *aux = list->head;
+    while (aux != NULL)
+    {
+        printf("%d ", aux->data);
+        aux = aux->next;
+    }
+    printf("\n");
+}
+
 void inserirNoInicio(List *list, int data) {
     Node *node = criarNo(data);
     if (list->head == NULL) {
@@ -117,36 +133,36 @@ int contarVogais(char *string) {
 }
 
 int main() {
-    List List;
+    List list;
     int inteiros[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     // Exercício 6: Escreva uma função que cria uma lista vazia.
     printf("6)\n");
-    criarListaVazia(&List);
+    criarListaVazia(&list);
     printf("\n");
 
     // Exercício 7: Escreva uma função que insere um elemento no início de uma lista.
     printf("7)\n");
-    inserirNoInicio(&List, 2);
-    inserirNoInicio(&List, 1);
+    inserirNoInicio(&list, 2);
+    inserirNoInicio(&list, 1);
     printf("\n");
 
     // Exercício 8: Escreva uma função que insere um elemento no final de uma lista.
     printf("8)\n");
-    inserirNoFinal(&List, 3);
-    inserirNoFinal(&List, 4);
+    inserirNoFinal(&list, 3);
+    inserirNoFinal(&list, 4);
     printf("\n");
 
     // Exercício 9: Escreva uma função que remove o primeiro elemento de uma lista.
     printf("9)\n");
-    removerPrimeiro(&List);
-    removerPrimeiro(&List);
+    removerPrimeiro(&list);
+    removerPrimeiro(&list);
     printf("\n");
 
     // Exercício 10: Escreva uma função que remove o último elemento de uma lista.
     printf("10)\n");
-    removerUltimo(&List);
-    removerUltimo(&List);
+    removerUltimo(&list);
+    removerUltimo(&list);
     printf("\n");
 
     // Exercício 12: Implemente uma função que receba um array de inteiros e retorne a soma de seus elementos.
@@ -164,6 +180,15 @@ int main() {
     char string[10] = "aeiou";
     char *ptr_string = &string[0];
     printf("Número de vogais: %d\n", contarVogais(ptr_string));
+    printf("\n");
+
+    // Exercicio 15: Escreva uma função que imprima a lista
+    printf("15)");
+    inserirNoFinal(&list, 1);
+    inserirNoFinal(&list, 2);
+    inserirNoFinal(&list, 3);
+    inserirNoFinal(&list, 4);
+    printList(&list);
     printf("\n");
     
     return 0;
